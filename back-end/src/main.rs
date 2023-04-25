@@ -47,6 +47,9 @@ impl PrimeItem{
 
 #[get("/prime-item/{name}")]
 async fn search(name: web::Path<String>) -> Result<impl Responder> {
+    // set query with headers
+    // refactor with https://stackoverflow.com/questions/47911513/how-do-i-set-the-request-headers-using-reqwest
+
     let url: String = "https://api.warframestat.us/items/search/".to_string();
 
     let resp = reqwest::get(url + name.as_str()).await;
@@ -58,7 +61,7 @@ async fn search(name: web::Path<String>) -> Result<impl Responder> {
     let mut response: PrimeItem = PrimeItem::new();
 
     for val in datas.iter(){
-        let val_name: String = val["name"].to_string();
+        let val_name: String = val["name"].to_string().replace("\"", "");
         let val_cat: String = val["category"].to_string();
         if val_name.contains("Prime") && 
         (val_cat.to_string().contains("Warframe") ||
@@ -71,13 +74,13 @@ async fn search(name: web::Path<String>) -> Result<impl Responder> {
             response.name = val_name;
             for part in val["components"].as_array().unwrap().iter(){
                 let mut cur_component: PrimeComponents = PrimeComponents::new();
-                let component_name: String = part["name"].to_string();
+                let component_name: String = part["name"].to_string().replace("\"", "");
                 cur_component.name = component_name;
 
                 for relic in part["drops"].as_array().unwrap().iter(){
                     let mut cur_relic: PrimeRelics = PrimeRelics::new();
-                    let relic_name: String = relic["location"].to_string();
-                    if !(relic_name.ends_with(")\"")){
+                    let relic_name: String = relic["location"].to_string().replace("\"", "");
+                    if !(relic_name.ends_with(")")){
                         cur_relic.name = relic_name;
                         cur_component.relics.push(cur_relic);
                     }   
@@ -115,4 +118,7 @@ async fn main() -> std::io::Result<()> {
     .bind(("127.0.0.1", 8080))?
     .run()
     .await
+
+    //Add loop here to refresh and store relic info locally
+    // https://users.rust-lang.org/t/update-an-actix-state-periodically/50892
 }
