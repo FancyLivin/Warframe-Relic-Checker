@@ -1,0 +1,22 @@
+.RelicView {
+    width: 5vw;
+    height: 10vh * 2px;
+    display: inline;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* .Test {
+    display: flex;
+} */
+
+.Rectangle {
+    height:30px * 2px;
+    width:150px;
+    border:2px solid rgb(0, 0, 0);
+    width:100px;
+    margin-top:10px;
+    margin-left:10px;
+    background:wheat;
+    display:inline-table;
+}

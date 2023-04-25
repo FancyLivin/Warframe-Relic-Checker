@@ -1,17 +1,125 @@
 [
-  {
-
+  {"name":"\"Volt Prime\"",
+    "components":
+    [
+      {"name":"\"Blueprint\"",
+        "relics":
+        [
+          {"name":"\"Axi N3 Relic\"","is_vaulted":false},
+          {"name":"\"Neo V1 Relic\"","is_vaulted":false},
+          {"name":"\"Lith O2 Relic\"","is_vaulted":false},
+          {"name":"\"Neo O1 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Chassis\"",
+        "relics":
+        [
+          {"name":"\"Axi V8 Relic\"","is_vaulted":false},
+          {"name":"\"Meso O3 Relic\"","is_vaulted":false},
+          {"name":"\"Meso V2 Relic\"","is_vaulted":false},
+          {"name":"\"Meso V3 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Neuroptics\"",
+        "relics":
+        [
+          {"name":"\"Axi V8 Relic\"","is_vaulted":false},
+          {"name":"\"Neo V8 Relic\"","is_vaulted":false},
+          {"name":"\"Axi V1 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Orokin Cell\"","relics":[]},
+      {"name":"\"Systems\"",
+        "relics":
+        [
+          {"name":"\"Axi L4 Relic\"","is_vaulted":false},
+          {"name":"\"Lith V1 Relic\"","is_vaulted":false},
+          {"name":"\"Neo O1 Relic\"","is_vaulted":false}
+        ]
+      }
+    ]
   },
-  {
-
+  {"name":"\"Glaive Prime\"",
+    "components":
+    [
+      {"name":"\"Blade\"",
+        "relics":
+        [
+          {"name":"\"Axi E1 Relic\"","is_vaulted":false},
+          {"name":"\"Axi L1 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Blueprint\"",
+        "relics":
+        [
+          {"name":"\"Lith G1 Relic\"","is_vaulted":false},
+          {"name":"\"Lith G2 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Disc\"",
+        "relics":
+        [
+          {"name":"\"Meso F3 Relic\"","is_vaulted":false},
+          {"name":"\"Neo S5 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Orokin Cell\"","relics":[]}
+    ]
   },
-  {
-
-  },
-  {
-
-  },
-  {
-    
+  {"name":"\"Helios Prime\"",
+    "components":
+    [
+      {"name":"\"Blueprint\"",
+        "relics":
+        [
+          {"name":"\"Lith C3 Relic\"","is_vaulted":false},
+          {"name":"\"Lith N2 Relic\"","is_vaulted":false},
+          {"name":"\"Lith V4 Relic\"","is_vaulted":false},
+          {"name":"\"Meso C3 Relic\"","is_vaulted":false},
+          {"name":"\"Meso E5 Relic\"","is_vaulted":false},
+          {"name":"\"Meso Z1 Relic\"","is_vaulted":false},
+          {"name":"\"Neo K1 Relic\"","is_vaulted":false},
+          {"name":"\"Neo M1 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Carapace\"",
+        "relics":
+        [
+          {"name":"\"Axi A3 Relic\"","is_vaulted":false},
+          {"name":"\"Axi C3 Relic\"","is_vaulted":false},
+          {"name":"\"Axi H3 Relic\"","is_vaulted":false},
+          {"name":"\"Lith K5 Relic\"","is_vaulted":false},
+          {"name":"\"Lith P1 Relic\"","is_vaulted":false},
+          {"name":"\"Meso E5 Relic\"","is_vaulted":false},
+          {"name":"\"Meso S6 Relic\"","is_vaulted":false},
+          {"name":"\"Neo N5 Relic\"","is_vaulted":false},
+          {"name":"\"Neo S7 Relic\"","is_vaulted":false},
+          {"name":"\"Neo V5 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Cerebrum\"",
+        "relics":
+        [
+          {"name":"\"Axi H1 Relic\"","is_vaulted":false},
+          {"name":"\"Axi H2 Relic\"","is_vaulted":false},
+          {"name":"\"Axi H5 Relic\"","is_vaulted":false},
+          {"name":"\"Lith H1 Relic\"","is_vaulted":false},
+          {"name":"\"Lith H2 Relic\"","is_vaulted":false},
+          {"name":"\"Meso H1 Relic\"","is_vaulted":false}
+        ]
+      },
+      {"name":"\"Orokin Cell\"","relics":[]},
+      {"name":"\"Systems\"",
+        "relics":
+        [
+          {"name":"\"Axi A12 Relic\"","is_vaulted":false},
+          {"name":"\"Axi N5 Relic\"","is_vaulted":false},
+          {"name":"\"Axi O2 Relic\"","is_vaulted":false},
+          {"name":"\"Lith V3 Relic\"","is_vaulted":false},
+          {"name":"\"Lith Z2 Relic\"","is_vaulted":false},
+          {"name":"\"Meso D2 Relic\"","is_vaulted":false}
+        ]
+      }
+    ]
   }
 ]
