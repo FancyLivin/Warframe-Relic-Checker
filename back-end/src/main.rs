@@ -1,8 +1,6 @@
-use actix_web::{get, web, App, HttpServer, HttpRequest, Responder, Result};
-use actix_files::NamedFile;
+use actix_web::{get, web, App, HttpServer, Responder, Result};
 use serde::Serialize;
 use actix_web_lab::web::spa;
-use std::path::PathBuf;
 
 #[derive(Serialize)]
 struct MyObj {
@@ -17,11 +15,6 @@ async fn greet(name: web::Path<String>) -> Result<impl Responder> {
     Ok(web::Json(obj))
 }
 
-async fn index(_req: HttpRequest) -> Result<NamedFile> {
-    let path: PathBuf = "../front-end/build/index.html".parse().unwrap();
-    Ok(NamedFile::open(path)?)
-}
-
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
@@ -29,9 +22,9 @@ async fn main() -> std::io::Result<()> {
         .service(greet)
         .service(
             spa()
-                .index_file("../front-end/build/index.html")
+                .index_file("./front-end/build/index.html")
                 .static_resources_mount("/static")
-                .static_resources_location("../front-end/build/static/")
+                .static_resources_location("./front-end/build/static/")
                 .finish(),
         )
     })
