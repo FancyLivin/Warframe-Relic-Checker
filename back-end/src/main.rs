@@ -1,14 +1,15 @@
 use actix_web::{get, web, App, HttpServer, Responder, Result};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use serde_json::{Value};
 use actix_web_lab::web::spa;
+use std::{fs};
 
 #[derive(Serialize)]
 struct MyObj {
     name: String,
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, Deserialize)]
 struct PrimeRelics {
     name: String,
     is_vaulted: bool,
@@ -45,14 +46,75 @@ impl PrimeItem{
     }
 }
 
+async fn is_relic_vaulted(name: String) -> bool {
+    let cached_data_result = fs::read_to_string("./db/relic_data.json");
+    
+    let cached_data = match cached_data_result {
+        Ok(file) => file,
+        Err(_) => "nofile".to_string(),
+    };
+
+    let create_dir = fs::create_dir_all("./db");
+
+    match create_dir {
+        Err(error) => panic!("I/O Error: {:?}", error),
+        Ok(_) => (),
+    };
+
+    let mut cached_relics: Vec<PrimeRelics> = Vec::new();
+
+    if cached_data != "nofile" {
+        cached_relics = serde_json::from_str(cached_data.as_str()).expect("JSON was not well formed...");
+
+        for relic in cached_relics.iter() {
+            if relic.name == name {
+                return relic.is_vaulted;
+            }
+        }
+    }   
+
+    // If relic was not cached, then hit api
+    let client = reqwest::Client::new();
+    let url: String = "https://api.warframestat.us/items/search/".to_string();
+
+    // Can add query parameters by appending /?param1=value&param2=value ect...
+    let resp = client.get(url + &name.as_str().replace("Relic", "") + "/?only=vaulted").send().await;
+
+    let s: String = resp.unwrap().text().await.unwrap();
+    let s_slice: &str = &s[..];
+    let datas: Vec<Value> = serde_json::from_str(s_slice).unwrap();
+
+    let api_vaulted_result: Option<bool> = datas[0]["vaulted"].as_bool();
+
+    let api_vaulted: bool = match api_vaulted_result {
+        Some(x) => x,
+        None => panic!("API didn't recognize relic"),
+    };
+
+    let api_relic: PrimeRelics = PrimeRelics { name: name, is_vaulted: api_vaulted };
+
+    cached_relics.push(api_relic);
+
+    let write_success= fs::write("./db/relic_data.json", serde_json::to_string(&cached_relics).unwrap());
+
+    match write_success {
+        Err(error) => panic!("I/O Error: {:?}", error),
+        Ok(_) => (),
+    };
+
+    api_vaulted
+
+}
+
 #[get("/prime-item/{name}")]
 async fn search(name: web::Path<String>) -> Result<impl Responder> {
-    // set query with headers
-    // refactor with https://stackoverflow.com/questions/47911513/how-do-i-set-the-request-headers-using-reqwest
 
     let url: String = "https://api.warframestat.us/items/search/".to_string();
 
-    let resp = reqwest::get(url + name.as_str()).await;
+    let client = reqwest::Client::new();
+
+    // Can add query parameters by appending /?param1=value&param2=value ect...
+    let resp = client.get(url + name.as_str()).send().await;
 
     let s: String = resp.unwrap().text().await.unwrap();
     let s_slice: &str = &s[..];
@@ -81,7 +143,8 @@ async fn search(name: web::Path<String>) -> Result<impl Responder> {
                     let mut cur_relic: PrimeRelics = PrimeRelics::new();
                     let relic_name: String = relic["location"].to_string().replace("\"", "");
                     if !(relic_name.ends_with(")")){
-                        cur_relic.name = relic_name;
+                        cur_relic.name = relic_name.clone();
+                        cur_relic.is_vaulted = is_relic_vaulted(relic_name).await;
                         cur_component.relics.push(cur_relic);
                     }   
                 }
